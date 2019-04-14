@@ -2,8 +2,8 @@ SHELL := /bin/bash
 
 .PHONY: install install_multiple install_linked install_bootstraped add_helm_repo delete
 
-HELM_REPO_URL?=https://jgantunes.github.io/helm-charts
-HELM_REPO_NAME?=jgantunes
+HELM_REPO_URL?=https://johnytiago.github.io/helm-charts
+HELM_REPO_NAME?=johnytiago
 HELM_OPTIONS?=--wait --timeout 600
 HELM_NAMESPACE?=ipfs-testbed
 
@@ -48,7 +48,7 @@ install: add_helm_repo
 		$(RELEASE_NAME) \
 		-f values.yaml \
 		-f bootstrap_values.json \
-		jgantunes/ipfs-testbed ; \
+		johnytiago/ipfs-testbed ; \
 	name=$$(kubectl -n $(HELM_NAMESPACE) get pods -l "app.kubernetes.io/instance=$(RELEASE_NAME)" -o jsonpath='{.items[0].metadata.name}') ; \
 	id=$$(kubectl -n $(HELM_NAMESPACE) exec $$name --container=js-ipfs jsipfs id | jq -r ".id | tostring") ; \
 	kubectl -n $(HELM_NAMESPACE) label all -l "app.kubernetes.io/instance=$(RELEASE_NAME)" ipfs-testbed/ipfs-id=$${id} ; \
